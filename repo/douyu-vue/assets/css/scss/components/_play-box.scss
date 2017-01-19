@@ -1,0 +1,35 @@
+.playBox {
+    width: 25%;
+}
+
+.imgBox {
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        b {
+            top: 50%;
+            opacity: 1;
+            filter: alpha(opacity=100);
+            z-index: 1;
+        }
+    }
+
+    b {
+        display: block;
+        width: 50px;
+        height: 50px;
+        background: url("../../images/playIcon.png") no-repeat;
+        position: absolute;
+        top: 80%;
+        left: 50%;
+        margin-top: -25px;
+        margin-left: -25px;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        transition: all .3s ease;          
+    }
+}

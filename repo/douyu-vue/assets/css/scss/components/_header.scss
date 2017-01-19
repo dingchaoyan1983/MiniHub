@@ -1,0 +1,375 @@
+#header {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #d1d1d1;
+    transform: translateZ(0);
+    z-index: 1;
+
+    .icofont {
+        display: inline-block;
+        width: 18px;
+        height: 20px;
+        background: url("../../images/head-icos.png") -500px -500px no-repeat;
+    }
+
+    .w1366head {
+        width: 1366px;
+
+        .head-oth {
+            margin-right: 126px;
+            position: relative;
+            
+            .o-search{
+                margin: 13px 25px 0 0;
+                height: 22px;
+                width: 148px;
+                border: 1px solid #aaa;
+                border-radius: 5px;
+
+                .s-ipt{
+                    display: block;
+                    font-size: 12px;
+                    background: 0 0;
+                    border: none;
+                    outline: 0;
+                    width: 116px;
+                    height: 22px;
+                    line-height: 22px;
+                    padding: 0 5px;
+                }
+
+                .s-ico {
+                    display: block;
+                    width: 22px;
+                    height: 22px;
+                    line-height: 22px;
+
+                   >.icofont{
+                       background-position: 0 -76px;
+                   }
+                }
+            }
+
+            .h-txt {
+                vertical-align: top;
+                line-height: 20px;
+                color: #868686;
+            }
+
+            .h-pop {
+                width: 350px;
+                display: none;
+                position: absolute;
+                right: -30px;
+                top: 50px;
+                background: #fff;
+                border: 1px solid #ddd;
+                border-bottom-right-radius: 4px;
+                border-bottom-left-radius: 4px;  
+
+                >i {
+                    width: 14px;
+                    height: 14px;
+                    position: absolute;
+                    top: -9px;
+                    right: 50px;
+                    background: url(../../images/arrow-top.png) no-repeat;
+                }  
+            }
+
+            .o-history, .o-follow, .o-download {
+                padding: 15px 17px 0 0;
+                position: relative;
+                cursor: pointer;
+
+                &.open {
+                    .h-pop {
+                        display: block;
+                    }
+                }
+            }
+
+            .o-history {
+                .icofont {
+                    background-position: 0 1px;
+                }
+
+                .h-list{
+                    padding-top: 8px;
+                    margin: 0 20px;
+
+                    >li {
+                        padding: 5px 16px 4px 24px;
+                        height: 51px;
+                        background: #fff;
+                        border-bottom: 1px solid #dfdfdf;
+
+                        >p {
+                            >a {
+                                width: 258px;
+                                display: block;
+                                font-size: 14px;
+                                line-height: 30px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                color: #555;
+                            }
+                        }
+
+                        >span {
+                            display: block;
+
+                            >a{
+                                width: 66px;
+                                display: block;
+                                float: left;
+                                color: #a0a0a0;
+                                overflow: hidden;
+                                white-space: nowrap;
+                                text-overflow: ellipsis;
+                                font-size: 12px;
+
+                                &.head-ico1 {
+                                    padding: 0 2px 0 20px;
+                                    background: url(../../images/head-pericos.png) 0 4px no-repeat;
+                                }
+
+                                &.head-ico2 {
+                                    padding: 0 2px 0 18px;
+                                    width: 90px;
+                                    background: url(../../images/head-pericos.png) 0 -29px no-repeat;
+                                }
+
+                                &.head-ico3 {
+                                    padding: 0 2px 0 18px;
+                                    width: 48px;
+                                    background: url(../../images/head-pericos.png) 0 -48px no-repeat;
+                                }
+                            }
+                        }      
+                    }
+                }
+            }
+
+            .o-follow {
+                .icofont {
+                    background-position: 0 -24px;
+                }
+            }
+
+           .o-download {
+                .icofont {
+                    background-position: 0 -51px;
+                }
+
+                .h-pop {
+                    width: 174px;
+                    display: none;
+                    position: absolute;
+                    right: -49px;
+                    top: 50px;
+                    background: #fff;
+                    border: 1px solid #ddd;
+                    border-bottom-right-radius: 4px;
+                    border-bottom-left-radius: 4px;  
+
+                    >i {
+                        right: 80px;
+                    }  
+
+                    li {
+                        text-align: center;
+                        border-bottom: 1px solid #e8e8e8;
+
+                        a{
+                            display: block;
+                            height: 42px;
+                            line-height: 42px;
+                            font-size: 14px;
+                            color: #444;
+                            border-left: 3px solid transparent;
+
+                            &:hover {
+                                color: #f70;
+                                border-color: #f70;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .head {
+        width: 100%;
+        margin: 0; 
+        position: relative;
+        z-index: 103;
+        height: 50px;  
+
+        .head-logo {
+            margin-left: 126px;
+            display: block;
+            height: 50px;
+            width: 88px;
+            background: url("../../images/douyu-logo.png") left center no-repeat;
+        }
+
+        .head-nav {
+            padding: 10px 0 0 39px;
+            height: 40px;
+            position: relative;
+            padding-left: 38px;
+
+            &>li {
+                font-size: 20px;
+                line-height: 30px;
+                width: 63px;
+                height: 30px;
+                margin: 0 8px;
+                text-align: center;
+                position: relative;
+
+                &:hover {
+                    a {
+                        color: #ff630e;
+                    }
+                }
+
+                &.current {
+                    a{
+                        color: #fff;
+                        background: #ff630e;
+                        border-radius: 3px;
+                    }
+                }
+
+                &>a {
+                    display: block;
+                    color: #444;
+                }
+
+                &.assort {
+                    &.open {
+                        .a-pop{
+                            display: block;
+
+                            >i {
+                                width: 14px;
+                                height: 14px;
+                                position: absolute;
+                                top: -9px;
+                                right: 50%;
+                                margin-right: -7px;
+                                background: url(../../images/arrow-top.png) no-repeat;
+                            }
+                        }
+
+                        i {
+                            background: url(../../images/assort-icon-hover.png) no-repeat;
+                        }
+                    }
+
+                    i {
+                        position: absolute;
+                        right: -12px;
+                        top: 14px;
+                        width: 9px;
+                        height: 5px;
+                        overflow: hidden;
+                        padding: 0;
+                        font-size: 0;
+                        line-height: 0;
+                        background: url(../../images/assort-icon.png) no-repeat;
+                        transition: all .3s ease-in-out;
+                        -o-transition: all .3s ease-in-out;
+                        -moz-transition: all .3s ease-in-out;
+                        -webkit-transition: all .3s ease-in-out;
+                    }
+
+                    .a-pop{
+                        padding: 10px 15px 12px;
+                        width: 247px;
+                        position: absolute;
+                        right: -107px;
+                        top: 40px;
+                        display: none;
+                        background: #fff;
+                        border: 1px solid #ddd;
+                        border-bottom-left-radius: 4px;
+                        border-bottom-right-radius: 4px;
+
+                        >li {
+                            width: 14px;
+                            height: 14px;
+                            position: absolute;
+                            top: -9px;
+                            right: 50%;
+                            margin-right: -7px;
+                        }
+
+                        .a-list {
+                            >h3 {
+                                margin: 8px 0 4px;
+                                color: #444;
+                                font-size: 14px;
+                                line-height: 22px;
+                                font-weight: 700;
+                                font-family: "microsoft yahei";
+                                text-align: left;
+                            }
+                            .btns {
+                                width: 250px;
+                                overflow: hidden;
+
+                                li {
+                                    float: left;
+                                    padding: 0 3px 3px 0;
+
+                                    a {
+                                        display: block;
+                                        padding: 0;
+                                        width: 80px;
+                                        height: 24px;
+                                        background: #ececec;
+                                        border: none;
+                                        font-size: 12px;
+                                        line-height: 24px;
+                                        color: #797979;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        text-align: center;
+                                        border-radius: 3px;
+
+                                        &:hover {
+                                            border: none;
+                                            background: #f70;
+                                            color: #FFF;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                       .btn-all {
+                            >a {
+                                display: block;
+                                height: 24px;
+                                background: #f70;
+                                line-height: 24px;
+                                color: #FFF;
+                                text-align: center;
+                                font-size: 14px;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
