@@ -10,6 +10,8 @@ import Modal from 'react-bootstrap/lib/Modal';
 import classname from 'classname';
 import { MODIFY, SAVE, VIEW_DIFF } from 'src/constants';
 import CodeDiff from './code-diff';
+//fetch socket connection
+import socket from '../../socket';
 
 const { PureComponent } = React;
 
@@ -100,7 +102,9 @@ export default class extends PureComponent {
     updateCode(newCode) {
         this.setState({
             code: newCode
-        })
+        });
+        
+        socket.emit('push change');
     }
 
     showDiff() {
@@ -117,6 +121,18 @@ export default class extends PureComponent {
 
     loadHistory() {
         this.props.loadHistory(this.props.file.get('extname'));
+    }
+
+    componentDidMount() {
+        socket.emit('join room', '动态roomid');
+        socket.on('listen change', function() {
+            console.log('listen change');
+            console.log(arguments);
+        })
+    }
+
+    componentWillUnmount() {
+        socket.emit('leave room', '动态roomid');        
     }
 }
 
