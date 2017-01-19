@@ -11,7 +11,7 @@ export default function(props) {
     const { splat = '' } = props.params;
     let headerDom = <div className="docs-header" id="content">
                         <div>
-                            <h1>Tiny Code</h1>
+                            <h1>Mini Hub</h1>
                             <p></p>
                         </div>
                     </div>;
@@ -33,7 +33,7 @@ export default function(props) {
     headerDom = <div>
                     <div className="docs-header sub">
                         <div>
-                            <h1>Tiny Code</h1>
+                            <h1>Mini Hub</h1>
                             <p></p>
                         </div>
                      </div>
