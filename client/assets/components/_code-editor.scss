@@ -1,0 +1,43 @@
+.ReactCodeMirror {
+    border: 1px solid $border-color;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+
+    .cm-s-default {
+        font-family: 'Operator Mono', 'Source Sans Pro', Menlo, Monaco, Consolas, Courier New, monospace;
+        height: 90vh;
+    }
+
+    &.readonly {
+        .CodeMirror {
+           background: rgba(204, 204, 204, 0.4);
+        }
+    }
+}
+
+.editor-toolbar__wrapper {
+    border: 1px solid $border-color;
+    border-bottom: none;
+    padding: 5px 0;
+}
+
+.editor-toolbar {
+    text-align: right;
+}
+
+.ReactDiffView {
+    .cm-s-default {
+        font-family: 'Operator Mono', 'Source Sans Pro', Menlo, Monaco, Consolas, Courier New, monospace;
+        height: 90vh;
+    }
+}
+
+.code-editor__diffbtn {
+    margin-right: 10px;
+}
+
+.diff-view__modal {
+    width: 100%;
+    height: 100vh;
+}

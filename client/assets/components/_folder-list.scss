@@ -1,0 +1,18 @@
+.folder-list {
+    border: 1px solid $border-color;
+    color: #888;
+}
+
+.folder-list__icon:before {
+    color: #337ab7;
+    padding-right: 5px;
+}
+
+.folder_item__author {
+    width: 20%;
+}
+
+.folder_item__modifiedTime {
+    width: 40%;
+    text-align: right;
+}

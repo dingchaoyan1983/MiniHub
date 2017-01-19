@@ -1,0 +1,40 @@
+.editor-navigate {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 0;
+    border: 1px solid $border-color;
+    border-bottom: none;
+    border-radius: 0;
+
+    .icon {
+        font-size: 14px
+    }
+}
+
+.linkable{
+    color: #337ab7;
+}
+
+.docs-header {
+    background: #2d2d2d;
+    filter: none;
+    color: #61dafb;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    font-size: 24px;
+    text-align: left;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    h1 {
+        padding-left: 15px;
+    }
+
+    &.sub {
+        padding-top: 10px;
+        padding-bottom: 20px;
+
+        h1 {
+            font-size: 24px;
+        }
+    }
+}
