@@ -18,7 +18,6 @@ router.get('/projects/:projectName/folders', function(req, res, next) {
 router.get('/projects/:projectName/file', function(req, res, next) {
   var relatedPath = req.query.relatedPath;
   var project = req.params.projectName;
-  console.log(relatedPath, project);
   var file = service.loadFile(project, relatedPath);
   res.json({data: file});
 });
