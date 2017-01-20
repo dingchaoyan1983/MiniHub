@@ -9,8 +9,8 @@ import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-bootstrap/lib/Modal';
 import classname from 'classname';
 import { MODIFY, SAVE, VIEW_DIFF } from 'src/constants';
-import CodeDiff from './code-diff';
 import io from 'socket.io-client';
+import {createPatch, applyPatch} from '../../utils';
 
 const { PureComponent } = React;
 
@@ -32,15 +32,11 @@ export default class extends PureComponent {
 
         this.state = {
             readOnly: true,
-            code: props.file.get('content'),
-            showDiff: false
+            code: props.file.get('content')
         }
 
         this.onClick = this.onClick.bind(this);
         this.updateCode = this.updateCode.bind(this);
-        this.showDiff = this.showDiff.bind(this);
-        this.hideDiff = this.hideDiff.bind(this);
-        this.loadHistory = this.loadHistory.bind(this);
         this.socket = io();
     }
 
@@ -60,28 +56,16 @@ export default class extends PureComponent {
         return <div>
                   <div className="clearfix editor-toolbar__wrapper">
                       <Col sm={3} smOffset={9} className="editor-toolbar">
-                        <Button bsSize="xs" bsStyle="primary" onClick={this.showDiff} className="code-editor__diffbtn">
-                            <i className="icon icon-copy"/>
-                            { VIEW_DIFF }
-                        </Button>
                         <Button bsSize="xs" bsStyle="primary" onClick={this.onClick}>
                             <i className={classname('icon', this.state.readOnly ? 'icon-pencil' : 'icon-floppy-disk')}/>
                             { this.state.readOnly ? MODIFY : SAVE }
                         </Button>
+                        {
+                            //this.state.readOnly ? null : <Button bsSize="xs" bsStyle="primary" onClick={this.onClick}>推送</Button>
+                        }
                       </Col>
                   </div>
                   <ReactCodemirror onChange={this.updateCode} value={this.state.code} options={this.options} className={classname(this.state.readOnly ? 'readonly' : '')}/>
-                  <Modal dialogClassName="diff-view__modal" animation={false} show={this.state.showDiff}>
-                        <Modal.Header closeButton={true} onHide={this.hideDiff}>
-                            <Modal.Title>对比</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <CodeDiff curr={this.state.code} prev={this.props.file.get('history')}/>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={this.hideDiff}>Close</Button>
-                        </Modal.Footer>
-                    </Modal>
                </div>
     }
 
@@ -100,27 +84,13 @@ export default class extends PureComponent {
     }
 
     updateCode(newCode) {
+        let patchs = createPatch(this.state.code, newCode);
+
         this.setState({
             code: newCode
         });
         
-        this.socket.emit('push change');
-    }
-
-    showDiff() {
-        this.setState({
-            showDiff: true
-        }, () => this.loadHistory());
-    }
-
-    hideDiff() {
-        this.setState({
-            showDiff: false
-        });
-    }
-
-    loadHistory() {
-        this.props.loadHistory(this.props.file.get('extname'));
+        this.socket.emit('push change', patchs);
     }
 
     componentDidMount() {
@@ -128,11 +98,14 @@ export default class extends PureComponent {
             //join the room
             this.socket.emit('join room', this.props.roomId);
         });
-        
+
         //listen change
-        this.socket.on('listen change', function() {
+        this.socket.on('listen change', ({patchs = ''}) => {
             console.log('listen change');
-             console.log(arguments);
+            let newCode = applyPatch(this.state.code, patchs);
+            this.setState({
+                code: newCode
+            });
         })
     }
 

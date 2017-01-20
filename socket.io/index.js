@@ -7,10 +7,10 @@ module.exports = function(client) {
         roomId = room_id;
     });
 
-    client.on('push change', function(data) {
+    client.on('push change', function(patchs) {
         if (roomId) {
             console.log(client.id + ' is pushing changes to room: ' + roomId);
-            client.to(roomId).emit('listen change', { some: data });
+            client.to(roomId).emit('listen change', { patchs: patchs });
         }
     })
 
