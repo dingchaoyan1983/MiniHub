@@ -14,6 +14,13 @@ module.exports = function(client) {
         }
     })
 
+    client.on('sync others', function(latestCode) {
+        if (roomId) {
+            console.log(client.id + ' is sycn changes to other room: ' + roomId);
+            client.to(roomId).emit('sync redux', latestCode);
+        }
+    })
+
     client.on('leave room', function(roomId) {
         console.log('goodbay:' + client.id + ' leave the room: ' + roomId);
         client.leave(roomId);

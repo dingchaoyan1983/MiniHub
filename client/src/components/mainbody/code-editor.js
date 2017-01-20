@@ -76,6 +76,9 @@ export default class extends PureComponent {
         }, () => {
             if (this.state.readOnly) {
                 this.props.modifyContent(this.props.roomId, this.state.code)
+                .then(({data:{code}}) => {
+                    this.socket.emit('sync others', code);
+                })
                 .catch(() => {
                     this.props.loadContent(this.props.roomId);
                 });
@@ -101,12 +104,18 @@ export default class extends PureComponent {
 
         //listen change
         this.socket.on('listen change', ({patchs = ''}) => {
-            console.log('listen change');
             let newCode = applyPatch(this.state.code, patchs);
+
             this.setState({
                 code: newCode
             });
-        })
+        });
+
+        //because this is not called frequently, so we can broadcase the whole file content
+        //just from my opinion.
+        this.socket.on('sync redux', (latestCode) => {
+           this.props.syncRedux(latestCode);
+        });
     }
 
     componentWillUnmount() {

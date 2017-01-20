@@ -48,8 +48,16 @@ export function loadHistory(extname) {
     }
 }
 
+export function syncRedux(latestCode = '') {
+    return {
+        type: SYNC_REDUX,
+        latestCode
+    }
+}
+
 const LOAD_SUCC = 'file/load_succ';
 const LOAD_HISTORY = 'file/load_history';
+const SYNC_REDUX = 'file/sync_redux';
 
 export default function(state = Immutable.fromJS(initState), action) {
     switch(action.type) {
@@ -62,6 +70,9 @@ export default function(state = Immutable.fromJS(initState), action) {
                    });
         case LOAD_HISTORY:
             return state.set('history', action.payload.code);
+        case SYNC_REDUX:
+            console.log('sync redux', action.latestCode);
+            return state.set('content', action.latestCode);
         default:
             return state;
     }
