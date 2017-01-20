@@ -2,7 +2,7 @@
   "name": "Mini-Hub",
   "version": "1.0.0",
   "description": "Mini Hub",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "npm run client:prod && npm restart",
     "start:dev": "npm run client:dev && npm restart",
