@@ -1,4 +1,4 @@
 var path = require('path');
-var REPO_ROOT = path.resolve(__dirname, 'REPO');
+var REPO_ROOT = path.resolve(__dirname, 'repo');
 
 module.exports = REPO_ROOT;
