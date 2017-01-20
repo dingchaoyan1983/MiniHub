@@ -7,7 +7,7 @@
   "description": "Mini Hub",
   "main": "server/index.js",
   "scripts": {
-    "start": "./node_modules/.bin/pm2 reload ./pm2.json",
+    "start": "node ./server/index.js",
     "start:dev": "npm run client:dev && npm restart",
     "start:watch": "npm run client:watch && npm restart",
     "restart": "./node_modules/.bin/pm2 reload ./pm2.json",
