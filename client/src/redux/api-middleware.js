@@ -47,8 +47,7 @@ export default function apiMiddleware({ dispatch }) {
                     url,
                     method,
                     data,
-                    dataType: 'json',
-                    processData: method.trim().toLowerCase() === 'get'
+                    dataType: 'json'
                 }));
 
                 promise.then(function({data}){

@@ -75,9 +75,9 @@ export default class extends PureComponent {
             readOnly: state
         }, () => {
             if (this.state.readOnly) {
-                this.props.modifyContent(this.props.file.get('extname'), this.state.code)
+                this.props.modifyContent(this.props.roomId, this.state.code)
                 .catch(() => {
-                    this.props.loadContent(this.props.file.get('extname'));
+                    this.props.loadContent(this.props.roomId);
                 });
             }
         });

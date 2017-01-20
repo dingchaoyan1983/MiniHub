@@ -16,7 +16,7 @@ import { loadFolders } from './redux/reducers/folder';
 import { loadContent } from './redux/reducers/file';
 import { loadProjects } from './redux/reducers/project';
 
-import { isFile, extname, splitPath } from './utils';
+import { isFile } from './utils';
 
 const store = createStore(rootReducer, applyMiddleware(apiMiddleware));
 const {dispatch} = store;
@@ -26,12 +26,10 @@ export default function(props) {
                 <Router history={ hashHistory }>
                     <Route path="/" component={ App } >
                         <Route path="*" component={ MainBody } onEnter={({params: {splat=''}}={}) => {
-                            let paths = splitPath(splat);
-
                             if(isFile(splat)) {
-                                dispatch(loadContent(paths[0], paths.slice(1)));
+                                dispatch(loadContent(splat));
                             } else {
-                                dispatch(loadFolders(paths[0], paths.slice(1)));
+                                dispatch(loadFolders(splat));
                             }
                         }}/>
                         <IndexRoute component={ Projects } onEnter = {() => dispatch(loadProjects())}/>

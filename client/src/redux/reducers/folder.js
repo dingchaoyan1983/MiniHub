@@ -1,8 +1,13 @@
 import Immutable from 'immutable';
+import { splitPath } from '../../utils';
+
 
 const initState = [];
 
-export function loadFolders(projectName, relatedPath) {
+export function loadFolders(splat) {
+    const paths = splitPath(splat);
+    const projectName = paths[0];
+    const relatedPath = paths.slice(1);
     return {
         API_CALL: true,
         url: `/api/projects/${projectName}/folders`,

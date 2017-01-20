@@ -92,8 +92,31 @@ function loadFile(project, relatedPath) {
     }
 }
 
+function writeFile(project, relatedPath, code) {
+    var extname = '';
+    var paths = [ROOT, project];
+
+    if(relatedPath) {
+        paths = paths.concat(relatedPath);
+    }
+
+    var rootPath = path.resolve.apply(path, paths);
+    var stat = fs.lstatSync(rootPath);
+
+    if(stat.isFile()) {
+        fs.writeFileSync(rootPath, code, {encoding: 'utf-8'});
+        extname = path.extname(rootPath);
+    }
+
+    return {
+        code: code,
+        extname: extname
+    }
+}
+
 module.exports = {
     listProjects: listProjects,
     listProjectRootFolders: listProjectRootFolders,
-    loadFile: loadFile
+    loadFile: loadFile,
+    writeFile
 }

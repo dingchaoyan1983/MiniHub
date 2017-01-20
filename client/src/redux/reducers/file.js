@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import { splitPath } from '../../utils';
 
 const initState = {
     content: '',
@@ -6,10 +7,14 @@ const initState = {
     history: ''
 };
 
-export function loadContent(project, relatedPath) {
+export function loadContent(splat) {
+    const paths = splitPath(splat);
+    const projectName = paths[0];
+    const relatedPath = paths.slice(1);
+
     return {
         API_CALL: true,
-        url: `/api/projects/${project}/file`,
+        url: `/api/projects/${projectName}/file`,
         data: {
             relatedPath
         },
@@ -17,13 +22,17 @@ export function loadContent(project, relatedPath) {
     }
 }
 
-export function modifyContent(extname, code) {
+export function modifyContent(splat, code) {
+    const paths = splitPath(splat);
+    const projectName = paths[0];
+    const relatedPath = paths.slice(1);
+    console.log(splat, relatedPath);
     return {
         API_CALL: true,
         method: 'PUT',
-        url: `/api/projects/projectId/folders/folderId/files/fileId`,
+        url: `/api/projects/${projectName}/file`,
         data: {
-            extname,
+            relatedPath: relatedPath.join(','),
             code
         },
         types: [,LOAD_SUCC,]

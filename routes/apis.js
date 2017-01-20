@@ -22,4 +22,12 @@ router.get('/projects/:projectName/file', function(req, res, next) {
   res.json({data: file});
 });
 
+router.put('/projects/:projectName/file', function(req, res, next) {
+  var relatedPath = req.body.relatedPath;
+  var project = req.params.projectName;
+  var code = req.body.code;
+  var file = service.writeFile(project, relatedPath.split(','), code);
+  res.json({data: file});
+});
+
 module.exports = router;
