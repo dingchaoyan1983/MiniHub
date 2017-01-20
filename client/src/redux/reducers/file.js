@@ -71,7 +71,6 @@ export default function(state = Immutable.fromJS(initState), action) {
         case LOAD_HISTORY:
             return state.set('history', action.payload.code);
         case SYNC_REDUX:
-            console.log('sync redux', action.latestCode);
             return state.set('content', action.latestCode);
         default:
             return state;
