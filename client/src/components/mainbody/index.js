@@ -8,7 +8,7 @@ export default  function(props) {
     let children = <FolderList {...props} splat={splat}/>;
 
     if (isFile(splat)) {
-        children = <CodeEditor  {...props}/>;
+        children = <CodeEditor  {...props} roomId={splat}/>;
     }
 
     return <div>

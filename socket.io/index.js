@@ -1,15 +1,21 @@
 module.exports = function(client) {
-    client.on('join room', function(data) {
-        console.log('join room');
-        client.join('动态roomid');
+    let roomId = null;
+
+    client.on('join room', function(room_id) {
+        console.log('welcome:' + client.id + ' join the room: ' + room_id);
+        client.join(room_id);
+        roomId = room_id;
     });
 
     client.on('push change', function(data) {
-        client.to('动态roomid').emit('listen change', { some: 'data' });
+        if (roomId) {
+            console.log(client.id + ' is pushing changes to room: ' + roomId);
+            client.to(roomId).emit('listen change', { some: data });
+        }
     })
 
-    client.on('leave room', function(data) {
-        console.log('leave room');
-        client.leave('动态roomid');
+    client.on('leave room', function(roomId) {
+        console.log('goodbay:' + client.id + ' leave the room: ' + roomId);
+        client.leave(roomId);
     });
 }
