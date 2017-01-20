@@ -7,12 +7,12 @@
   "description": "Mini Hub",
   "main": "server/index.js",
   "scripts": {
-    "start": "npm run client:prod && npm restart",
-    "start:dev": "npm run client:dev && npm restart",
-    "start:watch": "npm run client:watch && npm restart",
-    "restart": "pm2 reload ./pm2.json",
-    "stop": "pm2 stop ./pm2.json",
-    "kill": "pm2 delete ./pm2.json",
+    "start": "./node_modules/.bin/better-npm-run build:prod && ./node_modules/.bin/pm2 reload ./pm2.json",
+    // "start:dev": "npm run client:dev && npm restart",
+    // "start:watch": "npm run client:watch && npm restart",
+    // "restart": "./node_modules/.bin/pm2 reload ./pm2.json",
+    // "stop": "./node_modules/.bin/pm2 stop ./pm2.json",
+    // "kill": "./node_modules/.bin/pm2 delete ./pm2.json",
     "client:dev": "./node_modules/.bin/better-npm-run build",
     "client:watch": "./node_modules/.bin/better-npm-run build:watch",
     "client:prod": "./node_modules/.bin/better-npm-run build:prod"
