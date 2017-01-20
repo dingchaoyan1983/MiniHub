@@ -5,9 +5,6 @@
 ### First
 * `npm install` Install dependent node modules
 * `npm run start` boot up node server
-* `npm run restart` restart node server
-* `npm run stop` stop node server
-* `npm run kill` kill node server
 * `npm run client:prod` deploy `prod` to `dist` folder
 * `npm run client:watch` deploy `dev` to `dist` folder with watch ablitity
 * `npm run client:dev` deploy `dev` to `dist` folder
