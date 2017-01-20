@@ -1,15 +1,20 @@
 ## Mini Hub
-**Github look like** project reader
+**Github look like** `realtime` collaboration editor
 
 ## Setup
 ### First
 * `npm install` Install dependent node modules
-* `npm run dev` Deploy development to `dist` directory
-* `npm run watch` Deploy development to `dist` directory, also it provide watch ablitiy
-* `npm run prod` Deploy prodcuct to `dist` directory
+* `npm run start` boot up node server
+* `npm run restart` restart node server
+* `npm run stop` stop node server
+* `npm run kill` kill node server
+* `npm run client:prod` deploy `prod` to `dist` folder
+* `npm run client:watch` deploy `dev` to `dist` folder with watch ablitity
+* `npm run client:dev` deploy `dev` to `dist` folder
+
 
 ### Then
-* `npm run start` to start the node server.
+* `http://localhost:3000` to access the server.
 
 ### how to add repo
-do you find the `repo` folder, one thing you need to do is add a project in this folder. then you can see it in project list.
+do you find the `REPO` folder, one thing you need to do is add a project in this folder. then you can see it in project list.
