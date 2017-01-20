@@ -1,4 +1,4 @@
-var ROOT= require('../REPO_ROOT');
+var ROOT= require('../../REPO_ROOT');
 var fs = require('fs');
 var path = require('path');
 var Faker = require('faker');

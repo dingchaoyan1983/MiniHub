@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-bootstrap/lib/Modal';
 import classname from 'classname';
-import { MODIFY, SAVE, VIEW_DIFF } from 'src/constants';
+import { MODIFY, SAVE, VIEW_DIFF } from '../../constants';
 import io from 'socket.io-client';
 import {createPatch, applyPatch} from '../../utils';
 

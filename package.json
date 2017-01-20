@@ -4,7 +4,7 @@
   "description": "Mini Hub",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index",
+    "start": "node ./server/index",
     "dev": "./node_modules/.bin/better-npm-run build",
     "watch": "./node_modules/.bin/better-npm-run build:watch",
     "prod": "./node_modules/.bin/better-npm-run build:prod"

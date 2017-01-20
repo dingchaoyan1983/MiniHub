@@ -1,5 +1,5 @@
 /node_modules/
 /dist/
 /.vscode/
-/public/
-/views/
+/server/public/
+/server/views/

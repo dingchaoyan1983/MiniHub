@@ -4,8 +4,8 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var autoprefixer = require('autoprefixer');
-var src = path.join('client', 'src');
-var dist = 'public';
+var src = path.join(__dirname, 'client', 'src');
+var dist = path.join(__dirname, 'server', 'public');
 var cssLoader = 'css?sourceMap&-minimize';
 
 if (process.env.NODE_ENV === 'production') {
@@ -15,17 +15,14 @@ if (process.env.NODE_ENV === 'production') {
 var config = {
   devtool: 'cheap-monpdule-source-map',
   entry: {
-    app: path.join(__dirname, src, 'index.js'),
+    app: path.join(src, 'index.js'),
     vendor: ['react', 'react-dom']
   },
   output: {
-    path: path.join(__dirname, dist),
+    path: dist,
     filename: '[name].[hash].js',
     pathinfo: true,
     publicPath: './'
-  },
-  resolve: {
-    root:  path.resolve(__dirname, 'client')
   },
   module: {
     loaders: [
@@ -53,16 +50,16 @@ var config = {
   debug: true,
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, src, 'index.html'),
+      template: path.join(src, 'index.html'),
       hash: false,
       filename: '../views/index.html',
       inject: 'body',
-      favicon: path.join(__dirname, src, 'favicon.png'),
+      favicon: path.join(src, 'favicon.png'),
       minify: {
         collapseWhitespace: false
       }
     }),
-    new CleanWebpackPlugin([path.join(__dirname, dist)]),
+    new CleanWebpackPlugin([dist, path.join(dist, '..', 'views', 'index.html')]),
     new webpack.optimize.CommonsChunkPlugin({names: ['vendor']}),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
@@ -79,7 +76,6 @@ var config = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  config.output.filename = '[name].min.js';
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({
     compress: {
       unused: true,
