@@ -1,6 +1,7 @@
 {
   "name": "Mini-Hub",
   "version": "1.0.0",
+  "engines.node": "v6.9.4",
   "description": "Mini Hub",
   "main": "server/index.js",
   "scripts": {
