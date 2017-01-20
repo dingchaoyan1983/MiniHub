@@ -4,10 +4,15 @@
   "description": "Mini Hub",
   "main": "index.js",
   "scripts": {
-    "start": "node ./server/index",
-    "dev": "./node_modules/.bin/better-npm-run build",
-    "watch": "./node_modules/.bin/better-npm-run build:watch",
-    "prod": "./node_modules/.bin/better-npm-run build:prod"
+    "start": "npm run client:prod && npm restart",
+    "start:dev": "npm run client:dev && npm restart",
+    "start:watch": "npm run client:watch && npm restart",
+    "restart": "pm2 reload ./pm2.json",
+    "stop": "pm2 stop ./pm2.json",
+    "kill": "pm2 delete ./pm2.json",
+    "client:dev": "./node_modules/.bin/better-npm-run build",
+    "client:watch": "./node_modules/.bin/better-npm-run build:watch",
+    "client:prod": "./node_modules/.bin/better-npm-run build:prod"
   },
   "betterScripts": {
     "build": {
@@ -76,6 +81,7 @@
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.21.0",
     "node-sass": "^3.10.0",
+    "pm2": "^2.2.3",
     "postcss-loader": "^0.13.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",

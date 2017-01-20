@@ -1,0 +1,4 @@
+{
+  "name": "MiniHub",
+  "script": "server/index.js"
+}
