@@ -23,8 +23,8 @@ export function splitPath(splat = '') {
 }
 
 export function createPatch(text1 = '', text2 = '') {
-    text1 = normalizeLineEndings(text1);
-    text2 = normalizeLineEndings(text2);
+    // text1 = normalizeLineEndings(text1);
+    // text2 = normalizeLineEndings(text2);
     const diff = dmp.diff_main(text1, text2, true);
     let lines = 0;
     
