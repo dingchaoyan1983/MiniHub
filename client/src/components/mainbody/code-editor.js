@@ -38,7 +38,7 @@ export default class extends PureComponent {
         }
 
         this.onClick = this.onClick.bind(this);
-        this.updateCode =  debounce(this.updateCode.bind(this), 150);
+        this.updateCode =  debounce(this.updateCode.bind(this), 0);
         this.socket = io();
     }
 
