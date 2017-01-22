@@ -1,6 +1,9 @@
 ## Mini Hub
 **Github look like** `realtime` collaboration editor
 
+## Demo
+http://minihub.applinzi.com/
+
 ## Setup
 ### First
 * `npm install` Install dependent node modules
