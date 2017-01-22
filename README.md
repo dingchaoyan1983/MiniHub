@@ -14,4 +14,4 @@
 * `http://localhost:3000` to access the server.
 
 ### how to add repo
-do you find the `REPO` folder, one thing you need to do is add a project in this folder. then you can see it in project list.
+do you find the `repo` folder, one thing you need to do is add a project in this folder. then you can see it in project list.
