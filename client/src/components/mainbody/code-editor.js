@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCodemirror from 'react-codemirror';
+import ReactCodemirror from './react-codemirror';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/addon/scroll/simplescrollbars.js';
@@ -32,7 +32,8 @@ export default class extends PureComponent {
 
         this.state = {
             readOnly: true,
-            code: props.file.get('content')
+            code: props.file.get('content'),
+            lines: 0
         }
 
         this.onClick = this.onClick.bind(this);
@@ -65,7 +66,7 @@ export default class extends PureComponent {
                         }
                       </Col>
                   </div>
-                  <ReactCodemirror onChange={this.updateCode} value={this.state.code} options={this.options} className={classname(this.state.readOnly ? 'readonly' : '')}/>
+                  <ReactCodemirror lines={this.state.lines} onChange={this.updateCode} value={this.state.code} options={this.options} className={classname(this.state.readOnly ? 'readonly' : '')}/>
                </div>
     }
 
@@ -103,11 +104,12 @@ export default class extends PureComponent {
         });
 
         //listen change
-        this.socket.on('listen change', ({patchs = ''}) => {
-            let newCode = applyPatch(this.state.code, patchs);
-
+        this.socket.on('listen change', ({patches, lines}) => {
+            let newCode = applyPatch(this.state.code, patches);
+           
             this.setState({
-                code: newCode
+                code: newCode,
+                lines
             });
         });
 
