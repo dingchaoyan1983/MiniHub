@@ -11,7 +11,6 @@ import classname from 'classname';
 import { MODIFY, SAVE, VIEW_DIFF } from '../../constants';
 import io from 'socket.io-client';
 import {createPatch, applyPatch} from '../../utils';
-import debounce from 'lodash.debounce';
 
 const { PureComponent } = React;
 
@@ -38,7 +37,7 @@ export default class extends PureComponent {
         }
 
         this.onClick = this.onClick.bind(this);
-        this.updateCode =  debounce(this.updateCode.bind(this), 0);
+        this.updateCode = this.updateCode.bind(this);
         this.socket = io();
     }
 
