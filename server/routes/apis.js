@@ -30,8 +30,14 @@ router.get('/projects/:projectName/folders', function(req, res, next) {
 router.get('/projects/:projectName/file', function(req, res, next) {
   var relatedPath = req.query.relatedPath;
   var project = req.params.projectName;
-  var file = service.loadFile(project, relatedPath);
-  res.json({data: file});
+  var file = service.loadFile(project, relatedPath, function(err, file) {
+    if(err) {
+      console.log(err);
+      next(err);
+    } else {
+      res.json({data: file});
+    }
+  });
 });
 
 router.put('/projects/:projectName/file', function(req, res, next) {

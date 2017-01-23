@@ -96,7 +96,7 @@ function listProjectRootFolders (project, relatedPath, cb) {
     .catch(cb);
 }
 
-function loadFile(project, relatedPath) {
+function loadFile(project, relatedPath, cb) {
     var code = '';
     var extname = '';
     var paths = [ROOT, project];
@@ -106,17 +106,23 @@ function loadFile(project, relatedPath) {
     }
 
     var rootPath = path.resolve.apply(path, paths);
-    var stat = fs.lstatSync(rootPath);
 
-    if(stat.isFile()) {
-        code = fs.readFileSync(rootPath, {encoding: 'utf-8'});
-        extname = path.extname(rootPath);
-    }
-
-    return {
-        code: code,
-        extname: extname
-    }
+    promisefy(fs.lstat, fs, rootPath)
+    .then(function(stat) {
+        if(stat.isFile()) {
+            return promisefy(fs.readFile, fs, rootPath, {encoding: 'utf-8'})
+                   .then(function(code) {
+                       return {
+                           code: code,
+                           extname: path.extname(rootPath)
+                       }
+                   })
+        } else {
+            throw new Error("it is not a file, so can't read it.");
+        }
+    })
+    .then(cb.bind(null, null))
+    .catch(cb);
 }
 
 function writeFile(project, relatedPath, code) {
