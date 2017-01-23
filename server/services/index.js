@@ -125,7 +125,7 @@ function loadFile(project, relatedPath, cb) {
     .catch(cb);
 }
 
-function writeFile(project, relatedPath, code) {
+function writeFile(project, relatedPath, code, cb) {
     var extname = '';
     var paths = [ROOT, project];
 
@@ -134,17 +134,23 @@ function writeFile(project, relatedPath, code) {
     }
 
     var rootPath = path.resolve.apply(path, paths);
-    var stat = fs.lstatSync(rootPath);
-
-    if(stat.isFile()) {
-        fs.writeFileSync(rootPath, code, {encoding: 'utf-8'});
-        extname = path.extname(rootPath);
-    }
-
-    return {
-        code: code,
-        extname: extname
-    }
+    
+    promisefy(fs.lstat, fs, rootPath)
+    .then(function(stat) {
+        if(stat.isFile()) {
+            return promisefy(fs.writeFile, fs, rootPath, code, {encoding: 'utf-8'})
+                    .then(function() {
+                        return {
+                            code: code,
+                            extname: path.extname(rootPath)
+                        }
+                    })    
+        } else {
+            throw new Error("it is not a file, so can't write it.");
+        }
+    })
+    .then(cb.bind(null, null))
+    .catch(cb);
 }
 
 module.exports = {
