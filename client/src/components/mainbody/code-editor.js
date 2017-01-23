@@ -6,11 +6,9 @@ import 'codemirror/addon/scroll/simplescrollbars.js';
 import 'codemirror/addon/scroll/simplescrollbars.css';
 import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
-import Modal from 'react-bootstrap/lib/Modal';
 import classname from 'classname';
-import { MODIFY, SAVE, VIEW_DIFF } from '../../constants';
+import { MODIFY, SAVE } from '../../constants';
 import io from 'socket.io-client';
-import {createPatch, applyPatch} from '../../utils';
 
 const { PureComponent } = React;
 
@@ -32,8 +30,18 @@ export default class extends PureComponent {
 
         this.state = {
             readOnly: true,
-            code: props.file.get('content'),
-            lines: 0
+            changes: {
+                from: {
+                    line: 0,
+                    ch: 0
+                },
+                to: {
+                    line: 0,
+                    ch: 0
+                },
+                text: [''],
+                origin: 'setValue'
+            }
         }
 
         this.onClick = this.onClick.bind(this);
@@ -44,9 +52,23 @@ export default class extends PureComponent {
     componentWillReceiveProps(props) {
         const code = props.file.get('content');
 
+        //如果redux里面的code 发生了改变，我们就更新editor里面的值，但是更新的方式不是简单的实用
+        //setValue去做，因为那会reset光标的位置，所以这里我设置了origin 了标识这个操作时setValue，但是
+        //其实他调用了codemirror的replaceRange方法
         if (code !== this.state.code) {
             this.setState({
-                code
+                changes: {
+                    from: {
+                        line: 0,
+                        ch: 0
+                    },
+                    to: {
+                        line: 0,
+                        ch: 0
+                    },
+                    text: [code],
+                    origin: 'setValue'
+                }
             });
         }
     }
@@ -61,12 +83,9 @@ export default class extends PureComponent {
                             <i className={classname('icon', this.state.readOnly ? 'icon-pencil' : 'icon-floppy-disk')}/>
                             { this.state.readOnly ? MODIFY : SAVE }
                         </Button>
-                        {
-                            //this.state.readOnly ? null : <Button bsSize="xs" bsStyle="primary" onClick={this.onClick}>推送</Button>
-                        }
                       </Col>
                   </div>
-                  <ReactCodemirror lines={this.state.lines} onChange={this.updateCode} value={this.state.code} options={this.options} className={classname(this.state.readOnly ? 'readonly' : '')}/>
+                  <ReactCodemirror ref="editor" changes={ this.state.changes } onChange={ this.updateCode } options={this.options} className={classname(this.state.readOnly ? 'readonly' : '')}/>
                </div>
     }
 
@@ -76,9 +95,22 @@ export default class extends PureComponent {
             readOnly: state
         }, () => {
             if (this.state.readOnly) {
-                this.props.modifyContent(this.props.roomId, this.state.code)
+                this.props.modifyContent(this.props.roomId, this.refs.editor.codeMirror.getValue())
                 .then(({data:{code}}) => {
-                    this.socket.emit('sync others', code);
+                    this.setState({
+                        changes: {
+                                from: {
+                                    line: 0,
+                                    ch: 0
+                                },
+                                to: {
+                                    line: 0,
+                                    ch: 0
+                                },
+                                text: [code],
+                                origin: 'setValue'
+                            } 
+                    }, () => this.socket.emit('sync others', code));
                 })
                 .catch(() => {
                     this.props.loadContent(this.props.roomId);
@@ -87,14 +119,8 @@ export default class extends PureComponent {
         });
     }
 
-    updateCode(newCode) {
-        let patchs = createPatch(this.state.code, newCode);
-
-        this.setState({
-            code: newCode
-        });
-        
-        this.socket.emit('push change', patchs);
+    updateCode(newCode, changes) {
+        this.socket.emit('push change', changes);
     }
 
     componentDidMount() {
@@ -104,12 +130,13 @@ export default class extends PureComponent {
         });
 
         //listen change
-        this.socket.on('listen change', ({patches, lines}) => {
-            let newCode = applyPatch(this.state.code, patches);
-           
+        this.socket.on('listen change', (changes) => {
+            //因为这个地方时监听其他客户端的变化，然后再更新自己的editor，
+            //所以我们需要改变origin的值为sync socket(我们预定origin为sync socket时候是同步其他编辑器的代码), 以达到更新editor的目的
+            changes.origin = 'sync socket';
+
             this.setState({
-                code: newCode,
-                lines
+                changes
             });
         });
 
@@ -125,4 +152,3 @@ export default class extends PureComponent {
         this.socket.disconnect();       
     }
 }
-

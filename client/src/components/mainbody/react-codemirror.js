@@ -20,11 +20,23 @@ const CodeMirror = React.createClass({
 		path: React.PropTypes.string,
 		value: React.PropTypes.string,
 		preserveScrollPosition: React.PropTypes.bool,
+		changes: React.PropTypes.object
 	},
 	getDefaultProps () {
 		return {
 			preserveScrollPosition: false,
-            lines: 0
+            changes: {
+				from: {
+					line: 0,
+					ch: 0
+				},
+				to: {
+					line: 0,
+					ch: 0
+				},
+				text: [''],
+				origin: 'setValue'
+			}
 		};
 	},
 	getCodeMirrorInstance () {
@@ -52,22 +64,23 @@ const CodeMirror = React.createClass({
 		}
 	},
 	componentWillReceiveProps: function (nextProps) {
-		if (this.codeMirror && nextProps.value !== undefined && normalizeLineEndings(this.codeMirror.getValue()) !== normalizeLineEndings(nextProps.value)) {
-			let cursorPosition = this.codeMirror.getCursor();
-
-            if (this.props.preserveScrollPosition) {
-				var prevScrollPosition = this.codeMirror.getScrollInfo();
-				this.codeMirror.setValue(nextProps.value);
-				this.codeMirror.scrollTo(prevScrollPosition.left, prevScrollPosition.top);
-			} else {
-				this.codeMirror.setValue(nextProps.value);
+		//当传进来的change发生变化并且origin是setValue的时候我们才更新editor的值
+		if(this.codeMirror && this.props.changes !== nextProps.changes && (nextProps.changes.origin === 'setValue' ||  nextProps.changes.origin === 'sync socket')) {
+			if(nextProps.changes.origin === 'setValue') {
+				this.codeMirror.setValue('');
 			}
-			console.log(nextProps.lines)
-            this.codeMirror.setCursor({
-                line: cursorPosition.line + nextProps.lines,
-                ch: cursorPosition.ch
-            });
+			//我不知道为什么要这样写，也许这个才是换行符吧
+			if( nextProps.changes.text.length === 2 
+				&& nextProps.changes.text[0] === nextProps.changes.text[1] 
+				&& nextProps.changes.text[0] ==='') {
+				this.codeMirror.replaceRange('\n', nextProps.changes.from, nextProps.changes.to, nextProps.changes.origin )
+			} else {
+				for(let i = 0; i < nextProps.changes.text.length; i++) {
+					this.codeMirror.replaceRange(nextProps.changes.text[i], nextProps.changes.from, nextProps.changes.to, nextProps.changes.origin)
+				}
+			}
 		}
+
 		if (typeof nextProps.options === 'object') {
 			for (let optionName in nextProps.options) {
 				if (nextProps.options.hasOwnProperty(optionName)) {
@@ -94,7 +107,8 @@ const CodeMirror = React.createClass({
 		this.props.onScroll && this.props.onScroll(cm.getScrollInfo());
 	},
 	codemirrorValueChanged (doc, change) {
-		if (this.props.onChange && change.origin !== 'setValue') {
+		//当监听change事件不是setValue和sync socket的时候，我们才公布这个change 事件到外部，不然会造成事件循环
+		if (this.props.onChange && change.origin !== 'setValue' && change.origin !== 'sync socket') {
 			this.props.onChange(doc.getValue(), change);
 		}
 	},
