@@ -68,30 +68,32 @@ function listProjectRootFolders (project, relatedPath, cb) {
     }
 
     var rootPath = path.resolve.apply(path, paths);
-    var files = fs.readdirSync(rootPath);
-    var rootFolders = [];
 
-    files.forEach(function(file) {
-        var stat = fs.lstatSync(path.resolve(rootPath, file));
+    promisefy(fs.readdir, fs, rootPath)
+    .then(function(files) {
+        return Promise.all(files.map(function(file) {
+            return promisefy(fs.lstat, fs, path.resolve(rootPath, file))
+                   .then(function(stat) {
+                       var o = {
+                            name: file,
+                            modifiedBy: [Faker.name.lastName(), Faker.name.firstName()].join('.'),
+                            modifiedTime: Faker.date.recent(200)
+                        };
 
-        var o = {
-               name: file,
-               modifiedBy: [Faker.name.lastName(), Faker.name.firstName()].join('.'),
-               modifiedTime: Faker.date.recent(200)
-        }
+                        if(stat.isDirectory()) {
+                            o.type = 'folder';
+                        }
 
-        if(stat.isDirectory()) {
-           o.type = 'folder';
-        }
+                        if (stat.isFile()) {
+                            o.type = 'file';
+                        }
 
-        if(stat.isFile()) {
-            o.type = 'file';
-        }
-
-        rootFolders.push(o);
-    });
-
-    return rootFolders;
+                        return o;
+                   })
+        }))
+    })
+    .then(cb.bind(null, null))
+    .catch(cb);
 }
 
 function loadFile(project, relatedPath) {

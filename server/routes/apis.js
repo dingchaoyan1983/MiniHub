@@ -17,8 +17,14 @@ router.get('/projects', function(req, res, next) {
 router.get('/projects/:projectName/folders', function(req, res, next) {
   var relatedPath = req.query.relatedPath;
   var project = req.params.projectName;
-  var rootFolders = service.listProjectRootFolders(project, relatedPath);
-  res.json({data: rootFolders});
+  var rootFolders = service.listProjectRootFolders(project, relatedPath, function(err, folders) {
+    if(err) {
+      console.log(err);
+      next(err);
+    } else {
+      res.json({data: folders});
+    }
+  });
 });
 
 router.get('/projects/:projectName/file', function(req, res, next) {
