@@ -3,6 +3,23 @@ var fs = require('fs');
 var path = require('path');
 var Faker = require('faker');
 
+function promisefy(func, context) {
+    var args = Array.prototype.slice.call(arguments, 2);
+
+    return new Promise(function(resolve, reject) {
+        var cb = function(error, result) {
+            if(error) {
+                reject(error);
+            } else {
+                resolve(result);
+            }
+        }
+
+        args.push(cb);
+        func.apply(context, args);
+    });
+}
+
 function contributors() {
     var contributors = [];
 
@@ -13,29 +30,37 @@ function contributors() {
     return contributors;
 }
 
-function listProjects () {
-    var files = fs.readdirSync(ROOT);
-    var projects = [];
-
-    files.forEach(function(file) {
-        var stat = fs.lstatSync(path.resolve(ROOT, file));
-        if(stat.isDirectory()) {
-            projects.push(
-                {
-                    name: file,
-                    description: Faker.random.words(Faker.random.number({min: 15, max: 25})),
-                    contributors: contributors(),
-                    createTime: Faker.date.recent(200),
-                    type: 'project'
+function listProjects (cb) {
+    promisefy(fs.readdir, fs, ROOT)
+    .then(function(files) {
+        return Promise.all(files.map(function(file) {
+            return promisefy(fs.lstat, fs, path.resolve(ROOT, file)).then(function(stat) {
+                return {
+                    stat: stat,
+                    fileName: file
                 }
-            )
-        }
-    });
+            })
+        }))
+    })
+    .then(function(files) {
+        var projects =  files.filter(function(file) {
+            return file.stat.isDirectory();
+        }).map(function(file) {
+            return {
+                name: file.fileName,
+                description: Faker.random.words(Faker.random.number({min: 15, max: 25})),
+                contributors: contributors(),
+                createTime: Faker.date.recent(200),
+                type: 'project'
+            }
+        });
 
-    return projects;
+        cb(null, projects);
+    })
+    .catch(cb); 
 }
 
-function listProjectRootFolders (project, relatedPath) {
+function listProjectRootFolders (project, relatedPath, cb) {
     var paths = [ROOT, project];
 
     if(relatedPath) {

@@ -4,8 +4,14 @@ var service = require('../services');
 
 /* api listing. */
 router.get('/projects', function(req, res, next) {
-  var files = service.listProjects();
-  res.json({data: files});
+  var files = service.listProjects(function(err, projects) {
+    if(err) {
+      console.log(err);
+      next(err);
+    } else {
+      res.json({data: projects});
+    }
+  });
 });
 
 router.get('/projects/:projectName/folders', function(req, res, next) {
