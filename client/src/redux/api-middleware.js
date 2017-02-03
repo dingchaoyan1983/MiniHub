@@ -44,6 +44,7 @@ export default function apiMiddleware({ dispatch }) {
                 dispatch({type: REQ_START});
 
                 const promise = Promise.resolve($.ajax({
+                    cache: false,
                     url,
                     method,
                     data,
