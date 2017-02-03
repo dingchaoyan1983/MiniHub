@@ -1,5 +1,5 @@
 ## Mini Hub
-**Github look like** `realtime` collaboration editor
+A similar as Github `real-time collaborative` editor
 
 ## Demo
 http://minihub.applinzi.com/
@@ -12,9 +12,8 @@ http://minihub.applinzi.com/
 * `npm run client:watch` deploy `dev` to `dist` folder with watch ablitity
 * `npm run client:dev` deploy `dev` to `dist` folder
 
-
 ### Then
 * `http://localhost:3000` to access the server.
 
 ### how to add repo
-do you find the `repo` folder, one thing you need to do is add a project in this folder. then you can see it in project list.
+you can add any your project into `repo` folder.
