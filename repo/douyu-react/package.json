@@ -1,0 +1,69 @@
+{
+  "name": "douyu-react",
+  "version": "1.0.0",
+  "description": "www.douyu.com react markup",
+  "main": "index.js",
+  "scripts": {
+    "server": "./node_modules/.bin/webpack-dev-server --config=./webpack.config.js --progress --colors",
+    "dev": "./node_modules/.bin/better-npm-run build",
+    "watch": "./node_modules/.bin/better-npm-run build:watch",
+    "prod": "./node_modules/.bin/better-npm-run build:prod"
+  },
+  "betterScripts": {
+    "build": {
+      "command": "webpack --progress --colors --display-error-details",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "build:watch": {
+      "command": "webpack --watch --progress --colors --display-error-details",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "build:prod": {
+      "command": "webpack --progress --colors --display-error-details",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  },
+  "keywords": [
+    "www.douyu.com",
+    "react",
+    "markup",
+    "practice"
+  ],
+  "author": "DingChao <270422767@qq.com>",
+  "license": "ISC",
+  "dependencies": {
+    "classname": "^0.0.0",
+    "immutable": "^3.8.1",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-redux": "^5.0.1",
+    "react-router": "^3.0.0",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.5.0",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "better-npm-run": "0.0.11",
+    "clean-webpack-plugin": "^0.1.9",
+    "css-loader": "^0.25.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.21.0",
+    "node-sass": "^3.10.0",
+    "postcss-loader": "^0.13.0",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.2"
+  }
+}
