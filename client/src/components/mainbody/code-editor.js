@@ -20,8 +20,8 @@ const options = {
 
 export default class extends PureComponent {
     constructor(props, context) {
-       
         super(props, context);
+
         this.options = {
             lineNumbers: true,
             mode: 'javascript',
@@ -39,7 +39,7 @@ export default class extends PureComponent {
                     line: 0,
                     ch: 0
                 },
-                text: [''],
+                text: [props.content],
                 origin: 'setValue'
             }
         }
@@ -50,12 +50,12 @@ export default class extends PureComponent {
     }
 
     componentWillReceiveProps(props) {
-        const code = props.file.get('content');
+        const text = props.content;
 
         //如果redux里面的code 发生了改变，我们就更新editor里面的值，但是更新的方式不是简单的实用
         //setValue去做，因为那会reset光标的位置，所以这里我设置了origin 了标识这个操作时setValue，但是
         //其实他调用了codemirror的replaceRange方法
-        if (code !== this.state.code) {
+        if (text !== this.state.changes.text) {
             this.setState({
                 changes: {
                     from: {
@@ -66,7 +66,7 @@ export default class extends PureComponent {
                         line: 0,
                         ch: 0
                     },
-                    text: [code],
+                    text: [text],
                     origin: 'setValue'
                 }
             });

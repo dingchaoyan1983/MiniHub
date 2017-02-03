@@ -62,71 +62,6 @@ function listProjects (cb) {
     .catch(cb); 
 }
 
-function listProjectRootFolders (project, relatedPath, cb) {
-    var paths = [ROOT, project];
-
-    if(relatedPath) {
-        paths = paths.concat(relatedPath);
-    }
-
-    var rootPath = path.resolve.apply(path, paths);
-
-    promisefy(fs.readdir, fs, rootPath)
-    .then(function(files) {
-        return Promise.all(files.map(function(file) {
-            return promisefy(fs.lstat, fs, path.resolve(rootPath, file))
-                   .then(function(stat) {
-                       var o = {
-                            name: file,
-                            modifiedBy: [Faker.name.lastName(), Faker.name.firstName()].join('.'),
-                            modifiedTime: Faker.date.recent(200)
-                        };
-
-                        if(stat.isDirectory()) {
-                            o.type = 'folder';
-                        }
-
-                        if (stat.isFile()) {
-                            o.type = 'file';
-                        }
-
-                        return o;
-                   })
-        }))
-    })
-    .then(cb.bind(null, null))
-    .catch(cb);
-}
-
-function loadFile(project, relatedPath, cb) {
-    var code = '';
-    var extname = '';
-    var paths = [ROOT, project];
-
-    if(relatedPath) {
-        paths = paths.concat(relatedPath);
-    }
-
-    var rootPath = path.resolve.apply(path, paths);
-
-    promisefy(fs.lstat, fs, rootPath)
-    .then(function(stat) {
-        if(stat.isFile()) {
-            return promisefy(fs.readFile, fs, rootPath, {encoding: 'utf-8'})
-                   .then(function(code) {
-                       return {
-                           code: code,
-                           extname: path.extname(rootPath)
-                       }
-                   })
-        } else {
-            throw new Error("it is not a file, so can't read it.");
-        }
-    })
-    .then(cb.bind(null, null))
-    .catch(cb);
-}
-
 function writeFile(project, relatedPath, code, cb) {
     var extname = '';
     var paths = [ROOT, project];
@@ -155,9 +90,68 @@ function writeFile(project, relatedPath, code, cb) {
     .catch(cb);
 }
 
+function loadFileTree(project, relatedPath, cb) {
+    var paths = [ROOT, project];
+
+    if(relatedPath) {
+        paths = paths.concat(relatedPath);
+    }
+
+    var rootPath = path.resolve.apply(path, paths);
+
+    promisefy(fs.lstat, fs, rootPath)
+    .then(function(stat) {
+        if (stat.isFile()) {
+            return promisefy(fs.readFile, fs, rootPath, {encoding: 'utf-8'})
+                   .then(function (file) {
+                       return {
+                           content: file,
+                           isFile: true,
+                           isDirectory: false
+                       }
+                   });
+        } else if (stat.isDirectory()) {
+            return promisefy(fs.readdir, fs, rootPath)
+                   .then(function(files) {
+                       return Promise.all(files.map(function(file) {
+                            return promisefy(fs.lstat, fs, path.resolve(rootPath, file))
+                                    .then(function(stat) {
+                                        var o = {
+                                                name: file,
+                                                modifiedBy: [Faker.name.lastName(), Faker.name.firstName()].join('.'),
+                                                modifiedTime: Faker.date.recent(200)
+                                            };
+
+                                            if(stat.isDirectory()) {
+                                                o.type = 'folder';
+                                            }
+
+                                            if (stat.isFile()) {
+                                                o.type = 'file';
+                                            }
+
+                                            return o;
+                                    })
+                        }))
+                        .then(function(files) {
+                            return {
+                                content: files,
+                                isDirectory: true,
+                                isFile: false,
+                            };
+                        })
+                   })
+        } else {
+            throw new Error("can't recognized file type");
+        }
+    })
+    .then(cb.bind(null, null))
+    .catch(cb);
+
+}
+
 module.exports = {
     listProjects: listProjects,
-    listProjectRootFolders: listProjectRootFolders,
-    loadFile: loadFile,
-    writeFile
+    writeFile: writeFile,
+    loadFileTree: loadFileTree
 }

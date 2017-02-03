@@ -2,9 +2,9 @@ import Immutable from 'immutable';
 import { splitPath } from '../../utils';
 
 const initState = {
-    content: '',
-    extname: '',
-    history: ''
+    isFile: false,
+    isDirectory: false,
+    content: null
 };
 
 export function loadContent(splat) {
@@ -39,6 +39,21 @@ export function modifyContent(splat, code) {
     }
 }
 
+export function loadFileTree(splat) {
+    const paths = splitPath(splat);
+    const projectName = paths[0];
+    const relatedPath = paths.slice(1);
+
+    return {
+        API_CALL: true,
+        url: `/api/projects/${projectName}/fileTree`,
+        data: {
+            relatedPath
+        },
+        types: [,LOAD_SUCC,]
+    }
+}
+
 export function loadHistory(extname) {
     return {
         API_CALL: true,
@@ -61,13 +76,12 @@ const SYNC_REDUX = 'file/sync_redux';
 
 export default function(state = Immutable.fromJS(initState), action) {
     switch(action.type) {
-        case LOAD_SUCC:   
-            state = state.set('content', '');
-            return state.withMutations(function (state) {
-                        state.set('content', action.payload.code);
-                        state.set('extname', action.payload.extname);
-                        return state;
-                   });
+        case LOAD_SUCC: 
+            return state.withMutations(function(state) {
+                state.set('content', action.payload.content);
+                state.set('isDirectory', action.payload.isDirectory);
+                state.set('isFile', action.payload.isFile);
+            });
         case LOAD_HISTORY:
             return state.set('history', action.payload.code);
         case SYNC_REDUX:

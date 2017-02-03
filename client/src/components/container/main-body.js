@@ -4,9 +4,8 @@
 import {connect} from 'react-redux';
 import MainBody from '../mainbody';
 
-function mapStatesToProps({folders, file}) {
+function mapStatesToProps({ file }) {
     return {
-        folders,
         file
     };
 }

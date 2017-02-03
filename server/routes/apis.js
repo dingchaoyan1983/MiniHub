@@ -13,30 +13,6 @@ router.get('/projects', function(req, res, next) {
   });
 });
 
-router.get('/projects/:projectName/folders', function(req, res, next) {
-  var relatedPath = req.query.relatedPath;
-  var project = req.params.projectName;
-  var rootFolders = service.listProjectRootFolders(project, relatedPath, function(err, folders) {
-    if(err) {
-      next(err);
-    } else {
-      res.json({data: folders});
-    }
-  });
-});
-
-router.get('/projects/:projectName/file', function(req, res, next) {
-  var relatedPath = req.query.relatedPath;
-  var project = req.params.projectName;
-  var file = service.loadFile(project, relatedPath, function(err, file) {
-    if(err) {
-      next(err);
-    } else {
-      res.json({data: file});
-    }
-  });
-});
-
 router.put('/projects/:projectName/file', function(req, res, next) {
   var relatedPath = req.body.relatedPath;
   var project = req.params.projectName;
@@ -46,6 +22,19 @@ router.put('/projects/:projectName/file', function(req, res, next) {
       next(err);
     } else {
       res.json({data: file});
+    }
+  });
+});
+
+router.get('/projects/:projectName/fileTree', function(req, res, next) {
+  var relatedPath = req.query.relatedPath;
+  var project = req.params.projectName;
+  
+  var file = service.loadFileTree(project, relatedPath, function(err, data){
+    if(err) {
+      next(err);
+    } else {
+      res.json({data: data});
     }
   });
 });
