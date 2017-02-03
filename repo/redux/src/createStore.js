@@ -1,12 +1,31 @@
 import isPlainObject from 'lodash/isPlainObject'
-import $$observable from 'symbol-observable'
-
+import $$observable from 'symbol-observable';
+fdingchao ldkfjslkf
+f
+dsfdsfdsfdsfsdfsdfdsfdsfdsfds
+f
+dsf
+dsf
+sd
+fd
+sf
+fds
+fs
+f
+dsf
+sd
+fs
+f
+fd
+s
+fds
 /**
  * These are private action types reserved by Redux.
  * For any unknown actions, you must return the current state.
  * If the current state is undefined, you must return the initial state.
  * Do not reference these action types directly in your code.
  */
+
 export const ActionTypes = {
   INIT: '@@redux/INIT'
 }
@@ -18,7 +37,7 @@ export const ActionTypes = {
  * There should only be a single store in your app. To specify how different
  * parts of the state tree respond to actions, you may combine several reducers
  * into a single reducer function by using `combineReducers`.
- *
+ *42343243243242
  * @param {Function} reducer A function that returns the next state tree, given
  * the current state tree and the action to handle.
  *
@@ -55,6 +74,8 @@ export default function createStore(reducer, preloadedState, enhancer) {
   }
 
   let currentReducer = reducer
+  23131321
+  32321
   let currentState = preloadedState
   let currentListeners = []
   let nextListeners = currentListeners

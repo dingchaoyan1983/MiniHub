@@ -17,4 +17,3 @@ export const DELAY = 500;
 //some i18n configurations, for future usage.
 export const MODIFY= '修改';
 export const SAVE = '保存';
-export const VIEW_DIFF = '对比';

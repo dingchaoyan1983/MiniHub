@@ -78,8 +78,9 @@ function writeFile(project, relatedPath, code, cb) {
             return promisefy(fs.writeFile, fs, rootPath, code, {encoding: 'utf-8'})
                     .then(function() {
                         return {
-                            code: code,
-                            extname: path.extname(rootPath)
+                            content: code,
+                            isFile: true,
+                            isDirectory: false
                         }
                     })    
         } else {
@@ -135,7 +136,9 @@ function loadFileTree(project, relatedPath, cb) {
                         }))
                         .then(function(files) {
                             return {
-                                content: files,
+                                content: files.sort(function(file1, file2) {
+                                    return file1.type < file2.type;
+                                }),
                                 isDirectory: true,
                                 isFile: false,
                             };

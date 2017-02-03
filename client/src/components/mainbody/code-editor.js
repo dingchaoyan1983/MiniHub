@@ -55,7 +55,7 @@ export default class extends PureComponent {
         //如果redux里面的code 发生了改变，我们就更新editor里面的值，但是更新的方式不是简单的实用
         //setValue去做，因为那会reset光标的位置，所以这里我设置了origin 了标识这个操作时setValue，但是
         //其实他调用了codemirror的replaceRange方法
-        if (text !== this.state.changes.text) {
+        if (text !== this.state.changes.text[0]) {
             this.setState({
                 changes: {
                     from: {
@@ -95,25 +95,12 @@ export default class extends PureComponent {
             readOnly: state
         }, () => {
             if (this.state.readOnly) {
-                this.props.modifyContent(this.props.roomId, this.refs.editor.codeMirror.getValue())
-                .then(({data:{code}}) => {
-                    this.setState({
-                        changes: {
-                                from: {
-                                    line: 0,
-                                    ch: 0
-                                },
-                                to: {
-                                    line: 0,
-                                    ch: 0
-                                },
-                                text: [code],
-                                origin: 'setValue'
-                            } 
-                    }, () => this.socket.emit('sync others', code));
+                this.props.modifyFile(this.props.roomId, this.refs.editor.codeMirror.getValue())
+                .then(({data: {content = ''} = {}} = {}) => {
+                    this.socket.emit('sync others', content);
                 })
                 .catch(() => {
-                    this.props.loadContent(this.props.roomId);
+                    this.props.loadFileTree(this.props.roomId);
                 });
             }
         });

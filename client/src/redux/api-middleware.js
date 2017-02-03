@@ -54,7 +54,6 @@ export default function apiMiddleware({ dispatch }) {
                    livingAjaxCountDown();
                    dispatch({type: REQ_SUCC, payload: data});
                 }, function() {
-                    console.log(arguments);
                     livingAjaxCountDown();
                     dispatch({type: REQ_FAIL, error: arguments});
                 })

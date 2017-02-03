@@ -7,26 +7,11 @@ const initState = {
     content: null
 };
 
-export function loadContent(splat) {
+export function modifyFile(splat, code) {
     const paths = splitPath(splat);
     const projectName = paths[0];
     const relatedPath = paths.slice(1);
-
-    return {
-        API_CALL: true,
-        url: `/api/projects/${projectName}/file`,
-        data: {
-            relatedPath
-        },
-        types: [,LOAD_SUCC,]
-    }
-}
-
-export function modifyContent(splat, code) {
-    const paths = splitPath(splat);
-    const projectName = paths[0];
-    const relatedPath = paths.slice(1);
-    console.log(splat, relatedPath);
+    
     return {
         API_CALL: true,
         method: 'PUT',

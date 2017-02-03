@@ -66,16 +66,17 @@ const CodeMirror = React.createClass({
 		//当传进来的change发生变化并且origin是setValue的时候我们才更新editor的值
 		if(this.codeMirror && this.props.changes !== nextProps.changes && (nextProps.changes.origin === 'setValue' ||  nextProps.changes.origin === 'sync socket')) {
 			if(nextProps.changes.origin === 'setValue') {
-				this.codeMirror.setValue('');
-			}
-			//我不知道为什么要这样写，也许这个才是换行符吧
-			if( nextProps.changes.text.length === 2 
-				&& nextProps.changes.text[0] === nextProps.changes.text[1] 
-				&& nextProps.changes.text[0] ==='') {
-				this.codeMirror.replaceRange('\n', nextProps.changes.from, nextProps.changes.to, nextProps.changes.origin )
+				this.codeMirror.setValue(nextProps.changes.text[0]);
 			} else {
-				for(let i = 0; i < nextProps.changes.text.length; i++) {
-					this.codeMirror.replaceRange(nextProps.changes.text[i], nextProps.changes.from, nextProps.changes.to, nextProps.changes.origin)
+				//我不知道为什么要这样写，也许这个才是换行符吧
+				if( nextProps.changes.text.length === 2 
+					&& nextProps.changes.text[0] === nextProps.changes.text[1] 
+					&& nextProps.changes.text[0] ==='') {
+					this.codeMirror.replaceRange('\n', nextProps.changes.from, nextProps.changes.to, nextProps.changes.origin )
+				} else {
+					for(let i = 0; i < nextProps.changes.text.length; i++) {
+						this.codeMirror.replaceRange(nextProps.changes.text[i], nextProps.changes.from, nextProps.changes.to, nextProps.changes.origin)
+					}
 				}
 			}
 		}

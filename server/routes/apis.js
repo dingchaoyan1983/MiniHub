@@ -17,11 +17,11 @@ router.put('/projects/:projectName/file', function(req, res, next) {
   var relatedPath = req.body.relatedPath;
   var project = req.params.projectName;
   var code = req.body.code;
-  var file = service.writeFile(project, relatedPath.split(','), code, function(err, file){
+  var file = service.writeFile(project, relatedPath.split(','), code, function(err, data){
     if(err) {
       next(err);
     } else {
-      res.json({data: file});
+      res.json({data: data});
     }
   });
 });
