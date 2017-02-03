@@ -148,7 +148,6 @@ export default class extends PureComponent {
     }
 
     componentWillUnmount() {
-        this.socket.emit('leave room', this.props.roomId); 
         this.socket.disconnect();       
     }
 }

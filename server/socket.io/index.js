@@ -1,5 +1,5 @@
 module.exports = function(client) {
-    let roomId = null;
+    var roomId = null;
 
     client.on('join room', function(room_id) {
         console.log('welcome ip: ' + client.handshake.address + ', clientId: ' + client.id + ' join the room: ' + room_id);
@@ -21,8 +21,11 @@ module.exports = function(client) {
         }
     })
 
-    client.on('leave room', function(roomId) {
-        console.log('goodbay:' + client.id + ' leave the room: ' + roomId);
-        client.leave(roomId);
-    });
+    client.on('disconnect', function() {
+        if (roomId) {
+            console.log('goodbay ip: ' + client.handshake.address + ', clientId: ' + client.id + ' leave the room: ' + roomId);
+            client.leave(roomId);
+            roomId = null;
+        }
+    })
 }
