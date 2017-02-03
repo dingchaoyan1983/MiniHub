@@ -2,7 +2,7 @@ module.exports = function(client) {
     let roomId = null;
 
     client.on('join room', function(room_id) {
-        console.log('welcome:' + client.id + ' join the room: ' + room_id);
+        console.log('welcome ip: ' + client.handshake.address + ', clientId: ' + client.id + ' join the room: ' + room_id);
         client.join(room_id);
         roomId = room_id;
     });
