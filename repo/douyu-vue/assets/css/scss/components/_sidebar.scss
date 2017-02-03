@@ -1,0 +1,309 @@
+#left {
+    top: 51px;
+}
+
+.left-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: #2c2c2c;
+    height: 100%;
+    z-index: 1;
+
+    .left-btn {
+        position: fixed;
+        top: 50%;
+        left: 244px;
+        z-index: 10;
+        overflow: hidden;
+        cursor: pointer;
+        width: 15px;
+        height: 150px;
+        margin-top: -50px;
+        display: block;
+
+        span {
+            width: 15px;
+            height: 150px;
+            position: absolute;
+            top: 0;
+            left: -1px;
+            display: block;
+            background: url(../../images/side-left-shrink.png) no-repeat;
+
+            &:hover {
+                background-position: -22px 0;
+            }
+        }
+    }
+
+    .left-big {
+        width: 244px;
+        color: #c6c6c6;
+    }
+
+    .channel-cate {
+        ul {
+            width: 233px;
+
+            li {
+                height: 38px;
+                line-height: 38px;
+                border-bottom: 1px solid #272727;
+                width: 240px;
+
+                a {
+                    display: block;
+                    height: 37px;
+                    font-size: 15px;
+                    color: #c6c6c6;
+                    padding-left: 28px;
+                    border-bottom: 1px solid #313131;
+
+                    .icon {
+                        display: inline-block;
+                        background: url(../../images/side-list-icon.png) -500px -500px no-repeat;
+                        width: 20px;
+                        height: 20px;
+                        overflow: hidden;
+                        float: left;
+                        margin-right: 18px;
+                        margin-top: 8px;
+                    }
+
+                    .icon-live {
+                        background-position: 0 0;
+                    }
+
+                    .icon-game {
+                        background-position: 0 -26px;
+                    }
+
+                    .icon-rank {
+                        background-position: 1px -206px;
+                    }
+
+                    .icon-focus {
+                        background-position: 1px -50px;
+                    }
+
+                    .icon-collect {
+                        background-position: 1px -80px;
+                    }
+
+                    &.cur {
+                        background: #282828;
+
+                        span {
+                            color: #f60;
+                        }
+
+                        .icon-live {
+                            background-position: -63px 0;
+                        }
+
+                        .icon-game {
+                            background-position: -63px -26px;
+                        }
+
+                        .icon-rank {
+                            background-position: -63px -206px;
+                        }
+
+                        .icon-focus {
+                            background-position: -63px -50px;
+                        }
+
+                        .icon-collect {
+                            background-position: -63px -80px;
+                        }
+
+                    }
+
+                    &:hover {
+                        background: #f60;
+                        color: #fff;
+
+                        span {
+                            color: #fff;
+                        }
+
+                        .icon-live {
+                            background-position: -31px 0;
+                        }
+
+                        .icon-game {
+                            background-position: -31px -26px;
+                        }
+
+                        .icon-rank {
+                            background-position: -31px -206px;
+                        }
+
+                        .icon-focus {
+                            background-position: -31px -50px;
+                        }
+
+                        .icon-collect {
+                            background-position: -31px -80px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .leftnav-cate {
+        padding-top: 5px;
+        color: #c6c6c6;
+
+        .r-tit {
+            width: 206px;
+            margin: 0 auto;
+            height: 28px;
+            border-bottom: 2px solid #f60;
+
+            ul {
+                li {
+                    float: left;
+                    width: 50%;
+                    height: 30px;
+                    line-height: 30px;
+                    font-size: 15px;
+                    cursor: pointer;
+
+                    .icon-column {
+                        display: inline-block;
+                        background: url(../../images/side-list-icon.png) -500px -500px no-repeat;
+                        width: 20px;
+                        height: 20px;
+                        overflow: hidden;
+                        float: left;
+                        margin: 8px 14px 0 18px;  
+                    }
+
+                    .icon-recom {
+                        display: inline-block;
+                        background: url(../../images/left-list-icon.png) 0 -19px no-repeat;
+                        height: 16px;
+                        width: 21px;
+                        overflow: hidden;
+                        float: left;
+                        margin: 8px 14px 0 18px;
+                    }
+
+                    &.cur {
+                        background: #f60;
+                        color: #fff;
+                        border-radius: 2px 2px 0 0;
+                        
+                        .icon-column {
+                            background-position: -31px -107px;  
+                        }
+
+                        .icon-recom {
+                           background-position: 0 -48px;  
+                        }
+                    }
+                }
+            }
+        }
+
+        .r-cont {
+            width: 240px;
+
+            dl {
+                margin-top: 4px;
+
+                dt {
+                    width: 217px;
+                    padding-left: 15px;
+                    height: 34px;
+                    line-height: 38px;
+                    font-size: 15px;
+                    position: relative;
+                    border-top: 1px solid #2c2c2c;  
+
+                    i {
+                        display: inline-block;
+                        background: url(../../images/left_cion.png) no-repeat;
+                        width: 5px;
+                        height: 14px;
+                        overflow: hidden;
+                        float: left;
+                        margin: 13px 0 0 -5px;
+                        transition: all .3s ease-in-out;
+                        -o-transition: all .3s ease-in-out;
+                        -moz-transition: all .3s ease-in-out;
+                        -webkit-transition: all .3s ease-in-out;
+                    }
+
+                    span {
+                        display: inline-block;
+                        padding: 0 9px;
+                        color: #c6c6c6;
+                    } 
+                }
+
+                dd {
+                    overflow: hidden;
+                    padding: 0 4px 5px 15px;
+                    width: 213px;
+                    border-bottom: 1px solid #2c2c2c;
+                }
+            }
+
+            ul {
+                li {
+                    float: left;
+                    height: 24px;
+                    width: 66px;
+                    margin: 2px;
+
+                    a {
+                        display: block;
+                        background: #3f3f3f;
+                        line-height: 24px;
+                        width: 62px;
+                        padding: 0 2px;
+                        color: #d0d0d0;
+                        font-size: 12px;
+                        text-align: center;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        -moz-border-radius: 2px;
+                        -o-border-radius: 2px;
+                        -webkit-border-radius: 2px;
+                        border-radius: 2px;  
+
+                        &:hover {
+                            background: #f60;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+
+        .recom-cont {
+            padding-top: 0;
+
+            dl {
+                margin-top: 0;
+            }
+            
+        }
+    }
+}
+
+.channel-catelist-resize {
+    height: 33px!important;
+    line-height: 33px!important;
+}
+
+.hide {
+    display: none !important;
+}
+    
