@@ -9,7 +9,7 @@ export default function(props) {
     return <tr>
               <td>
                  <i className={classname('icon', 'folder-list__icon', type === FILE ? 'icon-file-text' : 'icon-folder')}/>
-                 <Link to={`${splat}/${name}`}>{name}</Link>    
+                 <Link to={`/${splat}/${name}`}>{name}</Link>    
               </td>
               <td className="folder_item__author">
                 <i className="icon icon-user"/>

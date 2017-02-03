@@ -2,7 +2,7 @@
  * Router configrations
  */
 import React from 'react';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router';
 import apiMiddleware from './redux/api-middleware';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
@@ -22,7 +22,7 @@ const {dispatch} = store;
 
 export default function(props) {
     return <Provider store={store}>
-                <Router history={ hashHistory }>
+                <Router history={ browserHistory }>
                     <Route path="/" component = { App }>
                         <Route path="*" component={ MainBody } onEnter={({params: {splat=''}}={}) => {
                             dispatch(loadFileTree(splat));
