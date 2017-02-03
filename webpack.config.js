@@ -22,7 +22,7 @@ var config = {
     path: dist,
     filename: '[name].[hash].js',
     pathinfo: true,
-    publicPath: './'
+    publicPath: '/'
   },
   module: {
     loaders: [

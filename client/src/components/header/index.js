@@ -25,7 +25,7 @@ export default function(props) {
         return {
             text: path,
             linkable: index < paths.length - 1,
-            route: paths.slice(0, index + 1).join('/'),
+            route: `/${paths.slice(0, index + 1).join('/')}`,
             file: isFile(path)
         }
     });
