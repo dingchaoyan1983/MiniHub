@@ -5,8 +5,6 @@ var Faker = require('faker');
 // introduce Promise polyfill to compat the lower node version 
 var Promise = require('es6-promise');
 
-console.log(Promise);
-
 function promisefy(func, context) {
     var args = Array.prototype.slice.call(arguments, 2);
 
