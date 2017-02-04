@@ -67,7 +67,7 @@ var config = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('[name].[hash].css')
+    new ExtractTextPlugin('[name].[hash].css', {allChunks: true})
   ],
   devServer: {
     inline: true,
